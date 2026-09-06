@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Darshana Sakpal — AI & Data Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0F1E;
+      --surface:   #1C2333;
+      --border:    #2A3450;
+      --text:      #F0F4FF;
+      --muted:     #8892AA;
+      --accent:    #6366F1;
+      --accent-h:  #818CF8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      padding: 0 24px;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 0 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+
+    nav .logo {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    nav ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.15s;
+    }
+
+    nav ul a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      margin-bottom: 96px;
+    }
+
+    .hero-label {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      max-width: 640px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 36px;
+      line-height: 1.75;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--accent-h); }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+
+    /* ── SECTION TITLES ── */
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section { margin-bottom: 96px; }
+
+    /* ── PROJECTS ── */
+    .project {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 24px;
+      align-items: start;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project:first-of-type { border-top: 1px solid var(--border); }
+
+    .project-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .project-stack {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .project-link {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      margin-top: 4px;
+      transition: color 0.15s;
+    }
+
+    .project-link:hover { color: var(--accent-h); }
+
+    /* ── EXPERIENCE ── */
+    .exp-item {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exp-item:first-of-type { border-top: 1px solid var(--border); }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .exp-role {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .exp-period {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .exp-company {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .exp-bullets li {
+      font-size: 14px;
+      color: var(--muted);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.65;
+    }
+
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--border);
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .skill-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      font-size: 14px;
+    }
+
+    .skill-cat {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .skill-list {
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.15s;
+    }
+
+    footer a:hover { color: var(--accent-h); }
+
+    .footer-links { display: flex; gap: 24px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      nav ul { gap: 20px; }
+      .project { grid-template-columns: 1fr; }
+      .skill-row { grid-template-columns: 1fr; gap: 4px; }
+      .exp-header { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">Darshana Sakpal</a>
+    <ul>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-label">AI & Data Engineer — Magdeburg, Germany</p>
+    <h1>Building production pipelines, agentic workflows, and automations that ship.</h1>
+    <p>
+      M.Sc. Digital Engineering graduate with hands-on experience in multi-agent LLM systems,
+      scalable ETL pipelines, and full-stack AI applications. Background bridging five years
+      in business development with deep technical engineering — I translate complexity into
+      things that actually run in production.
+    </p>
+    <div class="hero-links">
+      <a href="mailto:sakpaldarshana77@gmail.com" class="btn btn-primary">Get in touch</a>
+      <a href="https://linkedin.com/in/darshana-sakpal" target="_blank" class="btn btn-ghost">LinkedIn</a>
+      <a href="https://github.com/darshina2" target="_blank" class="btn btn-ghost">GitHub</a>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-title">Selected Projects</p>
+
+    <div class="project">
+      <div>
+        <p class="project-name">Human-in-the-Loop Multi-Agent Technology Scout</p>
+        <p class="project-stack">CrewAI · LangChain · LangGraph · Docker · Terraform · LLM Evaluation</p>
+        <p class="project-desc">
+          Built for BSH Hausgeräte GmbH as master thesis. Automated technology scouting
+          across 5+ sources, cutting research time by 87% and raising domain expert acceptance
+          of AI outputs from 55% to 85% through iterative human feedback loops. Includes a
+          quantitative evaluation framework tracking hallucination rate, ROUGE-L, and BERTScore.
+        </p>
+      </div>
+      <a href="https://github.com/darshina2" target="_blank" class="project-link">View →</a>
+    </div>
+
+    <div class="project">
+      <div>
+        <p class="project-name">Agentic Document Intelligence Pipeline</p>
+        <p class="project-stack">FastAPI · Streamlit · RAG · Vector Embeddings · Python</p>
+        <p class="project-desc">
+          Full-stack RAG application with vector retrieval, FastAPI backend, and Streamlit
+          interface for multi-topic document querying. Optimised chunking and retrieval
+          strategies for high-precision responses across complex documents.
+        </p>
+      </div>
+      <a href="https://github.com/darshina2" target="_blank" class="project-link">View →</a>
+    </div>
+
+    <div class="project">
+      <div>
+        <p class="project-name">Customer Risk Segmentation Engine</p>
+        <p class="project-stack">Python · SQL · XGBoost · Feature Engineering</p>
+        <p class="project-desc">
+          End-to-end credit risk prediction system using advanced feature engineering and
+          XGBoost. Segmented customers into Low / Medium / High risk tiers to support
+          targeted operational decision-making — mirrors actuarial segmentation logic
+          used in financial services.
+        </p>
+      </div>
+      <a href="https://github.com/darshina2" target="_blank" class="project-link">View →</a>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-title">Experience</p>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-role">Intern & Master Thesis Student</span>
+        <span class="exp-period">07/2025 – 03/2026</span>
+      </div>
+      <p class="exp-company">BSH Hausgeräte GmbH — Berlin, DE</p>
+      <ul class="exp-bullets">
+        <li>Cut technology scouting research time by 87% with a multi-agent LLM system using CrewAI, LangChain, and LangGraph across 5+ sources.</li>
+        <li>Raised domain expert acceptance of AI outputs from 55% to 85% via iterative human-in-the-loop feedback cycles.</li>
+        <li>Built an LLM evaluation framework tracking hallucination rate, ROUGE-L, and BERTScore to establish measurable quality criteria.</li>
+        <li>Enabled reproducible deployment by containerising the full stack with Docker and defining infrastructure with Terraform.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-role">Data Science Research Assistant</span>
+        <span class="exp-period">05/2024 – 06/2025</span>
+      </div>
+      <p class="exp-company">Halle Institute of Economic Research — Halle, DE</p>
+      <ul class="exp-bullets">
+        <li>Improved pipeline throughput by 50% and reduced extraction costs by 90% by optimising ETL architecture across 30+ data sources.</li>
+        <li>Built robust scraping infrastructure with Scrapy, proxy rotation, retry orchestration, and anti-bot handling for reliable production ingestion.</li>
+        <li>Maintained pipeline monitoring and observability, documenting processes for knowledge sharing across the team.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-role">Working Student, Software Developer</span>
+        <span class="exp-period">12/2023 – 11/2024</span>
+      </div>
+      <p class="exp-company">Fraunhofer IFF — Magdeburg, DE</p>
+      <ul class="exp-bullets">
+        <li>Shipped full-stack web applications in ReactJS owning end-to-end development from backend data integration to interactive frontend delivery.</li>
+        <li>Integrated real-time data streams into scalable, production-ready interfaces for engineering research use cases.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-role">Operations & Automation Analyst</span>
+        <span class="exp-period">07/2017 – 05/2022</span>
+      </div>
+      <p class="exp-company">Siemens Ltd, Digital Industries — Mumbai, IN</p>
+      <ul class="exp-bullets">
+        <li>Eliminated 10+ hours of weekly manual effort by automating operational reporting and workflows — the foundation that led to pursuing AI engineering full-time.</li>
+        <li>Shaped data-driven decisions for senior stakeholders through analytical models and market recommendations across cross-functional teams.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-title">Skills</p>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <span class="skill-cat">AI & LLMs</span>
+        <span class="skill-list">LangChain, LangGraph, CrewAI, RAG pipelines, LLM evaluation, multi-agent systems, prompt engineering, fine-tuning, Hugging Face</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Backend & APIs</span>
+        <span class="skill-list">Python, FastAPI, Django, Node.js, TypeScript, REST APIs</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Frontend</span>
+        <span class="skill-list">ReactJS, Next.js, Three.js, Streamlit</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Cloud & Infra</span>
+        <span class="skill-list">GCP, Azure, Docker, Kubernetes, Terraform, GitHub Actions, CI/CD</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Data & ML</span>
+        <span class="skill-list">PostgreSQL, MongoDB, Qdrant, Elasticsearch, BigQuery, ETL pipelines, Scrapy, PyTorch, XGBoost, Pandas, Power BI</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-cat">Languages</span>
+        <span class="skill-list">English C1 · German A2</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Darshana Sakpal · Available immediately · Magdeburg, Germany</p>
+    <div class="footer-links">
+      <a href="mailto:sakpaldarshana77@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/darshana-sakpal" target="_blank">LinkedIn</a>
+      <a href="https://github.com/darshina2" target="_blank">GitHub</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,486 +1,1094 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Darshana Sakpal — AI & Data Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Darshana Sakpal | AI Engineer | Data Scientist | Business Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-    :root {
-      --bg:        #0A0F1E;
-      --surface:   #1C2333;
-      --border:    #2A3450;
-      --text:      #F0F4FF;
-      --muted:     #8892AA;
-      --accent:    #6366F1;
-      --accent-h:  #818CF8;
+    :root{
+      --bg:#080C18;
+      --surface:#0E1425;
+      --card:#111827;
+      --border:#1E2D45;
+      --text:#F1F5FF;
+      --muted:#6B7FA3;
+      --faint:#1A2540;
+      --ai:#6366F1;
+      --ds:#0D9488;
+      --ba:#D97706;
+      --active:var(--ai);
     }
 
-    html { scroll-behavior: smooth; }
+    html{scroll-behavior:smooth}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 16px;
-      line-height: 1.7;
-      padding: 0 24px;
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Inter',sans-serif;
+      font-size:16px;
+      line-height:1.7;
+      overflow-x:hidden;
     }
 
-    .wrap {
-      max-width: 760px;
-      margin: 0 auto;
+    /* ── LOADER ── */
+    #loader{
+      position:fixed;inset:0;
+      background:var(--bg);
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      z-index:999;
+      transition:opacity 0.5s;
+    }
+    #loader .monogram{
+      font-size:48px;font-weight:700;
+      letter-spacing:-0.03em;
+      margin-bottom:24px;
+    }
+    #loader .bar-wrap{
+      width:200px;height:2px;
+      background:var(--border);border-radius:2px;overflow:hidden;
+    }
+    #loader .bar{
+      height:100%;width:0;
+      background:var(--ai);
+      transition:width 0.8s ease;
+    }
+    #loader .pct{
+      margin-top:12px;font-size:13px;color:var(--muted);
+    }
+
+    /* ── AVAILABLE BADGE ── */
+    .badge{
+      position:fixed;bottom:28px;right:28px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:100px;
+      padding:8px 16px 8px 12px;
+      display:flex;align-items:center;gap:8px;
+      font-size:13px;color:var(--text);
+      z-index:100;
+      box-shadow:0 4px 24px rgba(0,0,0,0.4);
+    }
+    .badge .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:#22c55e;
+      box-shadow:0 0 0 0 rgba(34,197,94,0.4);
+      animation:pulse 2s infinite;
+    }
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(34,197,94,0.4)}
+      70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}
+      100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
     }
 
     /* ── NAV ── */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 32px 0 48px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 80px;
+    nav{
+      position:fixed;top:0;left:0;right:0;
+      z-index:90;
+      background:rgba(8,12,24,0.85);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
     }
-
-    nav .logo {
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: 0.02em;
-      color: var(--text);
-      text-decoration: none;
+    .nav-inner{
+      max-width:1100px;margin:0 auto;
+      padding:16px 32px;
+      display:flex;justify-content:space-between;align-items:center;
     }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 32px;
+    .logo{
+      font-size:18px;font-weight:700;
+      letter-spacing:-0.02em;
+      color:var(--text);text-decoration:none;
     }
-
-    nav ul a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.15s;
+    .logo span{color:var(--active);transition:color 0.3s}
+    .nav-links{display:flex;gap:32px;list-style:none}
+    .nav-links a{
+      color:var(--muted);text-decoration:none;
+      font-size:14px;font-weight:500;
+      transition:color 0.15s;
     }
+    .nav-links a:hover{color:var(--text)}
 
-    nav ul a:hover { color: var(--text); }
+    /* ── MAIN WRAP ── */
+    main{padding-top:72px}
+    .section{
+      max-width:1100px;margin:0 auto;
+      padding:96px 32px;
+    }
+    .section-sm{padding:64px 32px}
 
     /* ── HERO ── */
-    .hero {
-      margin-bottom: 96px;
+    .hero{
+      min-height:calc(100vh - 72px);
+      display:flex;flex-direction:column;
+      justify-content:center;
+      padding:0 32px;
+      max-width:1100px;margin:0 auto;
+    }
+    .hero-tag{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:13px;font-weight:500;
+      color:var(--active);
+      border:1px solid currentColor;
+      border-radius:100px;
+      padding:4px 14px;
+      margin-bottom:32px;
+      width:fit-content;
+      transition:color 0.3s,border-color 0.3s;
+    }
+    .hero h1{
+      font-size:clamp(40px,6vw,76px);
+      font-weight:700;
+      line-height:1.08;
+      letter-spacing:-0.03em;
+      margin-bottom:12px;
+      max-width:900px;
+    }
+    .hero-role-line{
+      font-size:clamp(28px,4vw,52px);
+      font-weight:700;
+      letter-spacing:-0.02em;
+      margin-bottom:28px;
+      display:flex;align-items:center;gap:14px;
+      flex-wrap:wrap;
+    }
+    .hero-role-line .static{color:var(--muted);font-weight:400}
+    #animated-role{
+      color:var(--active);
+      transition:color 0.3s;
+      position:relative;
+    }
+    #animated-role::after{
+      content:'|';
+      animation:blink 0.9s infinite;
+      margin-left:3px;
+      font-weight:300;
+    }
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+    .hero-desc{
+      font-size:17px;color:var(--muted);
+      max-width:580px;
+      line-height:1.8;
+      margin-bottom:40px;
+    }
+    .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:64px}
+
+    .btn{
+      display:inline-block;
+      padding:12px 24px;
+      border-radius:6px;
+      font-size:14px;font-weight:600;
+      text-decoration:none;
+      transition:all 0.15s;
+      cursor:pointer;border:none;
+    }
+    .btn-primary{color:#fff;background:var(--active);transition:background 0.3s,opacity 0.15s}
+    .btn-primary:hover{opacity:0.85}
+    .btn-ghost{
+      border:1px solid var(--border);
+      color:var(--muted);background:transparent;
+    }
+    .btn-ghost:hover{border-color:var(--active);color:var(--text)}
+
+    /* ── ROLE TABS ── */
+    .role-tabs{
+      display:flex;gap:6px;
+      flex-wrap:wrap;
+    }
+    .role-tab{
+      padding:8px 20px;
+      border-radius:6px;
+      font-size:13px;font-weight:600;
+      border:1px solid var(--border);
+      background:transparent;
+      color:var(--muted);
+      cursor:pointer;
+      transition:all 0.2s;
+    }
+    .role-tab:hover{color:var(--text);border-color:var(--faint)}
+    .role-tab.active-ai{background:rgba(99,102,241,0.12);color:var(--ai);border-color:var(--ai)}
+    .role-tab.active-ds{background:rgba(13,148,136,0.12);color:var(--ds);border-color:var(--ds)}
+    .role-tab.active-ba{background:rgba(217,119,6,0.12);color:var(--ba);border-color:var(--ba)}
+
+    /* ── MARQUEE ── */
+    .marquee-wrap{
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:18px 0;
+      overflow:hidden;
+      background:var(--surface);
+    }
+    .marquee-track{
+      display:flex;gap:12px;
+      animation:marquee 30s linear infinite;
+      width:max-content;
+    }
+    .marquee-tag{
+      font-size:13px;font-weight:500;
+      color:var(--muted);
+      padding:6px 14px;
+      border:1px solid var(--border);
+      border-radius:100px;
+      white-space:nowrap;
+      background:var(--card);
+    }
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ── SECTION HEADER ── */
+    .section-header{
+      margin-bottom:56px;
+    }
+    .section-eyebrow{
+      font-size:12px;font-weight:600;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--active);
+      margin-bottom:12px;
+      transition:color 0.3s;
+    }
+    .section-header h2{
+      font-size:clamp(28px,4vw,44px);
+      font-weight:700;
+      letter-spacing:-0.02em;
+      line-height:1.15;
+    }
+    .section-header p{
+      font-size:16px;color:var(--muted);
+      max-width:520px;margin-top:12px;
     }
 
-    .hero-label {
-      font-size: 13px;
-      color: var(--accent);
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      margin-bottom: 20px;
+    /* ── PRINCIPLES ── */
+    .principles{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:24px;
+      margin-top:48px;
+    }
+    .principle{
+      padding:28px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      background:var(--card);
+    }
+    .principle-num{
+      font-size:13px;font-weight:700;
+      color:var(--active);
+      margin-bottom:14px;
+      transition:color 0.3s;
+    }
+    .principle h3{font-size:16px;font-weight:700;margin-bottom:8px}
+    .principle p{font-size:14px;color:var(--muted);line-height:1.65}
+
+    /* ── STATS ── */
+    .stats{
+      display:flex;gap:48px;flex-wrap:wrap;
+      padding:48px 0;
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      margin-top:56px;
+    }
+    .stat-num{
+      font-size:40px;font-weight:700;
+      letter-spacing:-0.02em;
+      color:var(--active);
+      transition:color 0.3s;
+    }
+    .stat-label{font-size:14px;color:var(--muted);margin-top:4px}
+
+    /* ── SKILLS GRID ── */
+    .skills-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+    }
+    .skill-card{
+      padding:24px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      background:var(--card);
+    }
+    .skill-card-title{
+      font-size:13px;font-weight:600;
+      color:var(--active);
+      margin-bottom:16px;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      transition:color 0.3s;
+    }
+    .skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+    .skill-tag{
+      font-size:12px;font-weight:500;
+      padding:4px 12px;
+      border-radius:100px;
+      border:1px solid var(--border);
+      color:var(--text);
+      background:var(--surface);
+    }
+    .skill-tag.hi{
+      border-color:var(--active);
+      background:rgba(99,102,241,0.08);
+      color:var(--active);
+      transition:border-color 0.3s,background 0.3s,color 0.3s;
     }
 
-    .hero h1 {
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 24px;
-      max-width: 640px;
+    /* ── PROJECT FILTERS ── */
+    .filter-bar{
+      display:flex;gap:8px;flex-wrap:wrap;
+      margin-bottom:36px;
+    }
+    .filter-btn{
+      padding:7px 18px;
+      border-radius:100px;
+      font-size:13px;font-weight:500;
+      border:1px solid var(--border);
+      background:transparent;color:var(--muted);
+      cursor:pointer;transition:all 0.15s;
+    }
+    .filter-btn:hover{color:var(--text)}
+    .filter-btn.active{
+      background:var(--active);
+      border-color:var(--active);
+      color:#fff;
+      transition:background 0.3s,border-color 0.3s;
     }
 
-    .hero p {
-      font-size: 17px;
-      color: var(--muted);
-      max-width: 560px;
-      margin-bottom: 36px;
-      line-height: 1.75;
+    /* ── PROJECT CARDS ── */
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+      gap:20px;
     }
-
-    .hero-links {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
+    .project-card{
+      border:1px solid var(--border);
+      border-radius:10px;
+      background:var(--card);
+      padding:28px;
+      display:flex;flex-direction:column;
+      gap:12px;
+      transition:border-color 0.2s;
+      cursor:default;
     }
+    .project-card:hover{border-color:var(--active);transition:border-color 0.3s}
+    .project-card[style*="display:none"]{display:none!important}
 
-    .btn {
-      display: inline-block;
-      padding: 10px 22px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s;
+    .project-cats{display:flex;gap:6px;flex-wrap:wrap}
+    .project-cat{
+      font-size:11px;font-weight:600;
+      padding:3px 10px;border-radius:100px;
+      text-transform:uppercase;letter-spacing:0.05em;
     }
+    .cat-ai{background:rgba(99,102,241,0.12);color:var(--ai)}
+    .cat-ds{background:rgba(13,148,136,0.12);color:var(--ds)}
+    .cat-ba{background:rgba(217,119,6,0.12);color:var(--ba)}
 
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
+    .project-name{font-size:17px;font-weight:700;line-height:1.35}
+    .project-desc{font-size:14px;color:var(--muted);line-height:1.7;flex:1}
+    .project-stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+    .stack-pill{
+      font-size:11px;
+      padding:3px 10px;border-radius:100px;
+      background:var(--surface);border:1px solid var(--border);
+      color:var(--muted);
     }
-
-    .btn-primary:hover { background: var(--accent-h); }
-
-    .btn-ghost {
-      border: 1px solid var(--border);
-      color: var(--muted);
+    .project-link{
+      font-size:13px;font-weight:600;
+      color:var(--active);text-decoration:none;
+      margin-top:auto;transition:color 0.3s;
+      width:fit-content;
     }
-
-    .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
-
-    /* ── SECTION TITLES ── */
-    .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 40px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    section { margin-bottom: 96px; }
-
-    /* ── PROJECTS ── */
-    .project {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8px 24px;
-      align-items: start;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .project:first-of-type { border-top: 1px solid var(--border); }
-
-    .project-name {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-
-    .project-stack {
-      font-size: 12px;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 10px;
-      letter-spacing: 0.02em;
-    }
-
-    .project-desc {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 520px;
-    }
-
-    .project-link {
-      font-size: 13px;
-      color: var(--muted);
-      text-decoration: none;
-      white-space: nowrap;
-      margin-top: 4px;
-      transition: color 0.15s;
-    }
-
-    .project-link:hover { color: var(--accent-h); }
+    .project-link:hover{opacity:0.75}
 
     /* ── EXPERIENCE ── */
-    .exp-item {
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
+    .exp-list{display:flex;flex-direction:column;gap:0}
+    .exp-item{
+      padding:32px 0;
+      border-bottom:1px solid var(--border);
+      display:grid;
+      grid-template-columns:200px 1fr;
+      gap:24px;
+    }
+    .exp-item:first-child{border-top:1px solid var(--border)}
+    .exp-period{font-size:12px;color:var(--muted);font-weight:500;margin-bottom:6px}
+    .exp-company{font-size:13px;font-weight:600;color:var(--active);transition:color 0.3s}
+    .exp-location{font-size:12px;color:var(--muted)}
+    .exp-role{font-size:17px;font-weight:700;margin-bottom:14px;line-height:1.3}
+    .exp-bullets{list-style:none;display:flex;flex-direction:column;gap:7px}
+    .exp-bullets li{
+      font-size:14px;color:var(--muted);
+      padding-left:16px;position:relative;line-height:1.65;
+    }
+    .exp-bullets li::before{
+      content:'—';position:absolute;left:0;color:var(--faint);
     }
 
-    .exp-item:first-of-type { border-top: 1px solid var(--border); }
-
-    .exp-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 4px;
+    /* ── CONTACT ── */
+    .contact-inner{
+      text-align:center;
+      padding:80px 32px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:var(--surface);
     }
-
-    .exp-role {
-      font-size: 15px;
-      font-weight: 700;
+    .contact-inner h2{
+      font-size:clamp(28px,4vw,44px);
+      font-weight:700;letter-spacing:-0.02em;
+      margin-bottom:16px;
     }
-
-    .exp-period {
-      font-size: 12px;
-      color: var(--muted);
+    .contact-inner p{
+      font-size:17px;color:var(--muted);
+      max-width:480px;margin:0 auto 36px;
     }
-
-    .exp-company {
-      font-size: 13px;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 12px;
+    .contact-links{
+      display:flex;justify-content:center;gap:24px;flex-wrap:wrap;
+      margin-top:40px;
     }
-
-    .exp-bullets {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    .contact-link{
+      display:flex;align-items:center;gap:8px;
+      font-size:14px;color:var(--muted);text-decoration:none;
+      transition:color 0.15s;
     }
-
-    .exp-bullets li {
-      font-size: 14px;
-      color: var(--muted);
-      padding-left: 16px;
-      position: relative;
-      line-height: 1.65;
-    }
-
-    .exp-bullets li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--border);
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .skill-row {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 12px;
-      align-items: baseline;
-      font-size: 14px;
-    }
-
-    .skill-cat {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .skill-list {
-      color: var(--text);
-      line-height: 1.6;
-    }
+    .contact-link:hover{color:var(--text)}
 
     /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
+    footer{
+      border-top:1px solid var(--border);
+      padding:28px 32px;
+      max-width:1100px;margin:0 auto;
+      display:flex;justify-content:space-between;align-items:center;
+      flex-wrap:wrap;gap:16px;
     }
-
-    footer p {
-      font-size: 13px;
-      color: var(--muted);
+    footer p{font-size:13px;color:var(--muted)}
+    .footer-links{display:flex;gap:20px}
+    .footer-links a{
+      font-size:13px;color:var(--muted);text-decoration:none;
+      transition:color 0.15s;
     }
-
-    footer a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 13px;
-      transition: color 0.15s;
-    }
-
-    footer a:hover { color: var(--accent-h); }
-
-    .footer-links { display: flex; gap: 24px; }
+    .footer-links a:hover{color:var(--text)}
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 560px) {
-      nav ul { gap: 20px; }
-      .project { grid-template-columns: 1fr; }
-      .skill-row { grid-template-columns: 1fr; gap: 4px; }
-      .exp-header { flex-direction: column; }
+    @media(max-width:700px){
+      .nav-links{display:none}
+      .exp-item{grid-template-columns:1fr}
+      .exp-left{display:flex;gap:16px;align-items:baseline}
+      .hero h1{font-size:36px}
+      .section{padding:64px 20px}
+      .badge{bottom:16px;right:16px}
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; }
+    @media(prefers-reduced-motion:reduce){
+      .marquee-track{animation:none}
+      #animated-role::after{animation:none}
+      *{transition:none!important}
     }
   </style>
 </head>
-<body>
-<div class="wrap">
+<body data-role="ai">
 
-  <!-- NAV -->
-  <nav>
-    <a href="#" class="logo">Darshana Sakpal</a>
-    <ul>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
+<!-- LOADER -->
+<div id="loader">
+  <div class="monogram">DS.</div>
+  <div class="bar-wrap"><div class="bar" id="bar"></div></div>
+  <div class="pct" id="pct">0%</div>
+</div>
+
+<!-- AVAILABLE BADGE -->
+<div class="badge">
+  <span class="dot"></span>
+  Available for work
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">DS<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#experience">Journey</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
-  </nav>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <div class="hero">
-    <p class="hero-label">AI & Data Engineer — Magdeburg, Germany</p>
-    <h1>Building production pipelines, agentic workflows, and automations that ship.</h1>
-    <p>
-      M.Sc. Digital Engineering graduate with hands-on experience in multi-agent LLM systems,
-      scalable ETL pipelines, and full-stack AI applications. Background bridging five years
-      in business development with deep technical engineering — I translate complexity into
-      things that actually run in production.
-    </p>
-    <div class="hero-links">
-      <a href="mailto:sakpaldarshana77@gmail.com" class="btn btn-primary">Get in touch</a>
-      <a href="https://linkedin.com/in/darshana-sakpal" target="_blank" class="btn btn-ghost">LinkedIn</a>
-      <a href="https://github.com/darshina2" target="_blank" class="btn btn-ghost">GitHub</a>
+<main>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-tag" id="hero-tag">AI Engineer · Magdeburg, Germany</div>
+  <h1>Darshana<br>Sakpal</h1>
+  <div class="hero-role-line">
+    <span class="static">I'm a</span>
+    <span id="animated-role">AI Engineer</span>
+  </div>
+  <p class="hero-desc" id="hero-desc">
+    Building production pipelines, agentic workflows, and automations that ship.
+    M.Sc. Digital Engineering graduate with 5 years of business context behind every technical decision.
+  </p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View My Work</a>
+    <a href="#contact" class="btn btn-ghost">Let's Talk</a>
+  </div>
+  <div class="role-tabs">
+    <button class="role-tab active-ai" data-role="ai">AI Engineer</button>
+    <button class="role-tab" data-role="ds">Data Scientist</button>
+    <button class="role-tab" data-role="ba">Business Analyst</button>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee-track">
+    <span class="marquee-tag">LangChain</span>
+    <span class="marquee-tag">LangGraph</span>
+    <span class="marquee-tag">CrewAI</span>
+    <span class="marquee-tag">RAG Pipelines</span>
+    <span class="marquee-tag">FastAPI</span>
+    <span class="marquee-tag">Python</span>
+    <span class="marquee-tag">Docker</span>
+    <span class="marquee-tag">Terraform</span>
+    <span class="marquee-tag">PostgreSQL</span>
+    <span class="marquee-tag">Qdrant</span>
+    <span class="marquee-tag">XGBoost</span>
+    <span class="marquee-tag">PyTorch</span>
+    <span class="marquee-tag">GCP</span>
+    <span class="marquee-tag">Azure</span>
+    <span class="marquee-tag">ReactJS</span>
+    <span class="marquee-tag">ETL Pipelines</span>
+    <span class="marquee-tag">Power BI</span>
+    <span class="marquee-tag">Scikit-learn</span>
+    <span class="marquee-tag">Scrapy</span>
+    <span class="marquee-tag">Multi-Agent Systems</span>
+    <span class="marquee-tag">LLM Evaluation</span>
+    <span class="marquee-tag">Hugging Face</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-tag">LangChain</span>
+    <span class="marquee-tag">LangGraph</span>
+    <span class="marquee-tag">CrewAI</span>
+    <span class="marquee-tag">RAG Pipelines</span>
+    <span class="marquee-tag">FastAPI</span>
+    <span class="marquee-tag">Python</span>
+    <span class="marquee-tag">Docker</span>
+    <span class="marquee-tag">Terraform</span>
+    <span class="marquee-tag">PostgreSQL</span>
+    <span class="marquee-tag">Qdrant</span>
+    <span class="marquee-tag">XGBoost</span>
+    <span class="marquee-tag">PyTorch</span>
+    <span class="marquee-tag">GCP</span>
+    <span class="marquee-tag">Azure</span>
+    <span class="marquee-tag">ReactJS</span>
+    <span class="marquee-tag">ETL Pipelines</span>
+    <span class="marquee-tag">Power BI</span>
+    <span class="marquee-tag">Scikit-learn</span>
+    <span class="marquee-tag">Scrapy</span>
+    <span class="marquee-tag">Multi-Agent Systems</span>
+    <span class="marquee-tag">LLM Evaluation</span>
+    <span class="marquee-tag">Hugging Face</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section">
+    <div class="section-header">
+      <p class="section-eyebrow">About</p>
+      <h2 id="about-title">Turning frontier AI into systems that run in production.</h2>
+      <p id="about-desc">I design and ship agentic LLM systems, RAG pipelines, and full-stack AI applications — with five years of business development experience at Siemens keeping every technical decision grounded in real-world value.</p>
+    </div>
+    <div class="principles" id="principles">
+      <div class="principle">
+        <p class="principle-num">01</p>
+        <h3>Production-first</h3>
+        <p>Systems built to run reliably — monitored, containerised, and reproducible from day one.</p>
+      </div>
+      <div class="principle">
+        <p class="principle-num">02</p>
+        <h3>Evaluation-driven</h3>
+        <p>Every AI pipeline ships with measurable quality criteria: ROUGE-L, BERTScore, hallucination rate.</p>
+      </div>
+      <div class="principle">
+        <p class="principle-num">03</p>
+        <h3>Business-grounded</h3>
+        <p>Five years at Siemens means I translate between what stakeholders need and what the data can do.</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div>
+        <div class="stat-num">87%</div>
+        <div class="stat-label">Research time reduced at BSH</div>
+      </div>
+      <div>
+        <div class="stat-num">90%</div>
+        <div class="stat-label">Pipeline cost reduction at IWH</div>
+      </div>
+      <div>
+        <div class="stat-num">30+</div>
+        <div class="stat-label">Data sources in production ETL</div>
+      </div>
+      <div>
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years of business context</div>
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <p class="section-title">Selected Projects</p>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section">
+    <div class="section-header">
+      <p class="section-eyebrow">Skills</p>
+      <h2>The stack behind the work</h2>
+    </div>
 
-    <div class="project">
-      <div>
+    <!-- AI Engineer skills -->
+    <div class="skills-grid skill-panel" data-role="ai">
+      <div class="skill-card">
+        <div class="skill-card-title">Agentic AI</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">LangChain</span><span class="skill-tag hi">LangGraph</span><span class="skill-tag hi">CrewAI</span><span class="skill-tag hi">Multi-agent systems</span><span class="skill-tag hi">RAG pipelines</span><span class="skill-tag hi">Prompt engineering</span><span class="skill-tag">Fine-tuning</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">LLM Evaluation</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">ROUGE-L</span><span class="skill-tag hi">BERTScore</span><span class="skill-tag hi">Hallucination detection</span><span class="skill-tag hi">LLMOps</span><span class="skill-tag">Hugging Face</span><span class="skill-tag">DSPy</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Backend & APIs</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">Python</span><span class="skill-tag hi">FastAPI</span><span class="skill-tag">Django</span><span class="skill-tag">Node.js</span><span class="skill-tag">TypeScript</span><span class="skill-tag">Streamlit</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Cloud & Infra</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">Docker</span><span class="skill-tag hi">Terraform</span><span class="skill-tag">GCP</span><span class="skill-tag">Azure</span><span class="skill-tag">Kubernetes</span><span class="skill-tag">GitHub Actions</span><span class="skill-tag">CI/CD</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Vector & Data</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">Qdrant</span><span class="skill-tag hi">Elasticsearch</span><span class="skill-tag">PostgreSQL</span><span class="skill-tag">MongoDB</span><span class="skill-tag">Redis</span><span class="skill-tag">BigQuery</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Frontend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">ReactJS</span><span class="skill-tag">Next.js</span><span class="skill-tag">Three.js</span><span class="skill-tag">Streamlit</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Scientist skills -->
+    <div class="skills-grid skill-panel" data-role="ds" style="display:none">
+      <div class="skill-card">
+        <div class="skill-card-title">ML & Modelling</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">XGBoost</span><span class="skill-tag hi">Scikit-learn</span><span class="skill-tag hi">PyTorch</span><span class="skill-tag hi">Feature engineering</span><span class="skill-tag">Fine-tuning</span><span class="skill-tag">Hugging Face</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">LLM & NLP</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">LangChain</span><span class="skill-tag hi">LangGraph</span><span class="skill-tag hi">RAG pipelines</span><span class="skill-tag hi">ROUGE-L</span><span class="skill-tag hi">BERTScore</span><span class="skill-tag hi">Hallucination detection</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Data Engineering</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">Python</span><span class="skill-tag hi">Pandas</span><span class="skill-tag hi">SQL</span><span class="skill-tag hi">ETL pipelines</span><span class="skill-tag hi">Scrapy</span><span class="skill-tag">BigQuery</span><span class="skill-tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Analytics & BI</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">Power BI</span><span class="skill-tag">Elasticsearch</span><span class="skill-tag">MongoDB</span><span class="skill-tag">Qdrant</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Cloud & Infra</div>
+        <div class="skill-tags">
+          <span class="skill-tag">GCP</span><span class="skill-tag">Azure</span><span class="skill-tag">Docker</span><span class="skill-tag">Terraform</span><span class="skill-tag">BigQuery</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Analyst skills -->
+    <div class="skills-grid skill-panel" data-role="ba" style="display:none">
+      <div class="skill-card">
+        <div class="skill-card-title">Analysis & BI</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">Power BI</span><span class="skill-tag hi">SQL</span><span class="skill-tag hi">Python</span><span class="skill-tag hi">Pandas</span><span class="skill-tag hi">XGBoost</span><span class="skill-tag hi">Scikit-learn</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">AI for Business</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">LLM evaluation</span><span class="skill-tag hi">Multi-agent systems</span><span class="skill-tag hi">RAG pipelines</span><span class="skill-tag hi">Process automation</span><span class="skill-tag">Prompt engineering</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Strategy</div>
+        <div class="skill-tags">
+          <span class="skill-tag hi">Stakeholder reporting</span><span class="skill-tag hi">Market analysis</span><span class="skill-tag hi">Cross-functional teams</span><span class="skill-tag hi">Operational planning</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Data & Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">ETL pipelines</span><span class="skill-tag">PostgreSQL</span><span class="skill-tag">BigQuery</span><span class="skill-tag">FastAPI</span><span class="skill-tag">GCP</span><span class="skill-tag">Docker</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section">
+    <div class="section-header">
+      <p class="section-eyebrow">Work</p>
+      <h2>Projects, shipped</h2>
+      <p>Real systems built for research institutions, industrial clients, and production environments.</p>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="ai">AI Engineering</button>
+      <button class="filter-btn" data-filter="ds">Data Science</button>
+      <button class="filter-btn" data-filter="ba">Business Analysis</button>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card" data-cats="ai">
+        <div class="project-cats"><span class="project-cat cat-ai">AI Engineering</span></div>
         <p class="project-name">Human-in-the-Loop Multi-Agent Technology Scout</p>
-        <p class="project-stack">CrewAI · LangChain · LangGraph · Docker · Terraform · LLM Evaluation</p>
-        <p class="project-desc">
-          Built for BSH Hausgeräte GmbH as master thesis. Automated technology scouting
-          across 5+ sources, cutting research time by 87% and raising domain expert acceptance
-          of AI outputs from 55% to 85% through iterative human feedback loops. Includes a
-          quantitative evaluation framework tracking hallucination rate, ROUGE-L, and BERTScore.
-        </p>
+        <p class="project-desc">Automated technology scouting across 5+ sources for BSH Hausgeräte GmbH. Cut research time by 87% and raised domain expert acceptance from 55% to 85% through iterative human feedback loops.</p>
+        <div class="project-stack">
+          <span class="stack-pill">CrewAI</span><span class="stack-pill">LangGraph</span><span class="stack-pill">LangChain</span><span class="stack-pill">Docker</span><span class="stack-pill">Terraform</span>
+        </div>
+        <a href="https://github.com/darshina2" target="_blank" class="project-link">View on GitHub →</a>
       </div>
-      <a href="https://github.com/darshina2" target="_blank" class="project-link">View →</a>
-    </div>
 
-    <div class="project">
-      <div>
+      <div class="project-card" data-cats="ai">
+        <div class="project-cats"><span class="project-cat cat-ai">AI Engineering</span></div>
         <p class="project-name">Agentic Document Intelligence Pipeline</p>
-        <p class="project-stack">FastAPI · Streamlit · RAG · Vector Embeddings · Python</p>
-        <p class="project-desc">
-          Full-stack RAG application with vector retrieval, FastAPI backend, and Streamlit
-          interface for multi-topic document querying. Optimised chunking and retrieval
-          strategies for high-precision responses across complex documents.
-        </p>
+        <p class="project-desc">Full-stack RAG application with vector retrieval, FastAPI backend, and Streamlit interface for multi-topic document querying at scale. Optimised chunking for high-precision responses.</p>
+        <div class="project-stack">
+          <span class="stack-pill">FastAPI</span><span class="stack-pill">Qdrant</span><span class="stack-pill">RAG</span><span class="stack-pill">Streamlit</span><span class="stack-pill">Python</span>
+        </div>
+        <a href="https://github.com/darshina2" target="_blank" class="project-link">View on GitHub →</a>
       </div>
-      <a href="https://github.com/darshina2" target="_blank" class="project-link">View →</a>
-    </div>
 
-    <div class="project">
-      <div>
+      <div class="project-card" data-cats="ds">
+        <div class="project-cats"><span class="project-cat cat-ds">Data Science</span></div>
+        <p class="project-name">LLM Evaluation Framework</p>
+        <p class="project-desc">Quantitative framework benchmarking agentic vs. one-shot LLM pipelines. Tracked hallucination rate, ROUGE-L, BERTScore, and user trust — establishing measurable quality standards for production AI.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Python</span><span class="stack-pill">ROUGE-L</span><span class="stack-pill">BERTScore</span><span class="stack-pill">Statistical analysis</span>
+        </div>
+        <a href="https://github.com/darshina2" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card" data-cats="ds ba">
+        <div class="project-cats">
+          <span class="project-cat cat-ds">Data Science</span>
+          <span class="project-cat cat-ba">Business Analysis</span>
+        </div>
         <p class="project-name">Customer Risk Segmentation Engine</p>
-        <p class="project-stack">Python · SQL · XGBoost · Feature Engineering</p>
-        <p class="project-desc">
-          End-to-end credit risk prediction system using advanced feature engineering and
-          XGBoost. Segmented customers into Low / Medium / High risk tiers to support
-          targeted operational decision-making — mirrors actuarial segmentation logic
-          used in financial services.
-        </p>
+        <p class="project-desc">End-to-end credit risk prediction using XGBoost and SQL. Segmented customers into Low / Medium / High risk tiers to support targeted operational decision-making.</p>
+        <div class="project-stack">
+          <span class="stack-pill">XGBoost</span><span class="stack-pill">Python</span><span class="stack-pill">SQL</span><span class="stack-pill">Scikit-learn</span><span class="stack-pill">Pandas</span>
+        </div>
+        <a href="https://github.com/darshina2" target="_blank" class="project-link">View on GitHub →</a>
       </div>
-      <a href="https://github.com/darshina2" target="_blank" class="project-link">View →</a>
+
+      <div class="project-card" data-cats="ds">
+        <div class="project-cats"><span class="project-cat cat-ds">Data Science</span></div>
+        <p class="project-name">Scalable ETL & Data Acquisition System</p>
+        <p class="project-desc">Production pipelines processing 30+ data sources at the Halle Institute of Economic Research. Improved throughput by 50% and cut extraction costs by 90% through architecture optimisation.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Python</span><span class="stack-pill">Scrapy</span><span class="stack-pill">PostgreSQL</span><span class="stack-pill">BigQuery</span><span class="stack-pill">ETL</span>
+        </div>
+        <a href="https://github.com/darshina2" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
+      <div class="project-card" data-cats="ba">
+        <div class="project-cats"><span class="project-cat cat-ba">Business Analysis</span></div>
+        <p class="project-name">Technology Scouting Intelligence System</p>
+        <p class="project-desc">Designed the end-to-end workflow for automated R&D scouting at BSH — from requirement gathering with leadership to delivering structured AI insights for non-technical stakeholders.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Multi-Agent AI</span><span class="stack-pill">LangChain</span><span class="stack-pill">Power BI</span><span class="stack-pill">Stakeholder reporting</span>
+        </div>
+        <a href="https://github.com/darshina2" target="_blank" class="project-link">View on GitHub →</a>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <p class="section-title">Experience</p>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <span class="exp-role">Intern & Master Thesis Student</span>
-        <span class="exp-period">07/2025 – 03/2026</span>
-      </div>
-      <p class="exp-company">BSH Hausgeräte GmbH — Berlin, DE</p>
-      <ul class="exp-bullets">
-        <li>Cut technology scouting research time by 87% with a multi-agent LLM system using CrewAI, LangChain, and LangGraph across 5+ sources.</li>
-        <li>Raised domain expert acceptance of AI outputs from 55% to 85% via iterative human-in-the-loop feedback cycles.</li>
-        <li>Built an LLM evaluation framework tracking hallucination rate, ROUGE-L, and BERTScore to establish measurable quality criteria.</li>
-        <li>Enabled reproducible deployment by containerising the full stack with Docker and defining infrastructure with Terraform.</li>
-      </ul>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section">
+    <div class="section-header">
+      <p class="section-eyebrow">Journey</p>
+      <h2>How I got here</h2>
     </div>
+    <div class="exp-list">
 
-    <div class="exp-item">
-      <div class="exp-header">
-        <span class="exp-role">Data Science Research Assistant</span>
-        <span class="exp-period">05/2024 – 06/2025</span>
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-period">07/2025 – 03/2026</div>
+          <div class="exp-company">BSH Hausgeräte GmbH</div>
+          <div class="exp-location">Berlin, Germany</div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-role">Intern & Master Thesis Student</div>
+          <ul class="exp-bullets">
+            <li>Cut technology scouting research time by 87% with a multi-agent LLM system using CrewAI, LangChain, and LangGraph.</li>
+            <li>Raised domain expert acceptance of AI outputs from 55% to 85% via iterative human-in-the-loop feedback cycles.</li>
+            <li>Built an LLM evaluation framework tracking hallucination rate, ROUGE-L, and BERTScore.</li>
+            <li>Enabled reproducible deployment by containerising the stack with Docker and defining infrastructure with Terraform.</li>
+          </ul>
+        </div>
       </div>
-      <p class="exp-company">Halle Institute of Economic Research — Halle, DE</p>
-      <ul class="exp-bullets">
-        <li>Improved pipeline throughput by 50% and reduced extraction costs by 90% by optimising ETL architecture across 30+ data sources.</li>
-        <li>Built robust scraping infrastructure with Scrapy, proxy rotation, retry orchestration, and anti-bot handling for reliable production ingestion.</li>
-        <li>Maintained pipeline monitoring and observability, documenting processes for knowledge sharing across the team.</li>
-      </ul>
+
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-period">05/2024 – 06/2025</div>
+          <div class="exp-company">Halle Institute of Economic Research</div>
+          <div class="exp-location">Halle, Germany</div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-role">Data Science Research Assistant</div>
+          <ul class="exp-bullets">
+            <li>Improved pipeline throughput by 50% and reduced extraction costs by 90% across 30+ data sources.</li>
+            <li>Built robust scraping infrastructure with Scrapy, proxy rotation, retry orchestration, and anti-bot handling.</li>
+            <li>Maintained pipeline monitoring and observability in production environments.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-period">12/2023 – 11/2024</div>
+          <div class="exp-company">Fraunhofer IFF</div>
+          <div class="exp-location">Magdeburg, Germany</div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-role">Working Student, Software Developer</div>
+          <ul class="exp-bullets">
+            <li>Shipped full-stack ReactJS applications from backend data integration to interactive frontend delivery.</li>
+            <li>Integrated real-time data streams into scalable, production-ready interfaces.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-period">07/2017 – 05/2022</div>
+          <div class="exp-company">Siemens Ltd, Digital Industries</div>
+          <div class="exp-location">Mumbai, India</div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-role">Operations & Automation Analyst</div>
+          <ul class="exp-bullets">
+            <li>Eliminated 10+ hours of weekly manual effort by automating operational reporting and workflows.</li>
+            <li>Shaped data-driven decisions for senior stakeholders through analytical models and market recommendations.</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
+  </div>
+</section>
 
-    <div class="exp-item">
-      <div class="exp-header">
-        <span class="exp-role">Working Student, Software Developer</span>
-        <span class="exp-period">12/2023 – 11/2024</span>
-      </div>
-      <p class="exp-company">Fraunhofer IFF — Magdeburg, DE</p>
-      <ul class="exp-bullets">
-        <li>Shipped full-stack web applications in ReactJS owning end-to-end development from backend data integration to interactive frontend delivery.</li>
-        <li>Integrated real-time data streams into scalable, production-ready interfaces for engineering research use cases.</li>
-      </ul>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <span class="exp-role">Operations & Automation Analyst</span>
-        <span class="exp-period">07/2017 – 05/2022</span>
-      </div>
-      <p class="exp-company">Siemens Ltd, Digital Industries — Mumbai, IN</p>
-      <ul class="exp-bullets">
-        <li>Eliminated 10+ hours of weekly manual effort by automating operational reporting and workflows — the foundation that led to pursuing AI engineering full-time.</li>
-        <li>Shaped data-driven decisions for senior stakeholders through analytical models and market recommendations across cross-functional teams.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills">
-    <p class="section-title">Skills</p>
-    <div class="skills-grid">
-      <div class="skill-row">
-        <span class="skill-cat">AI & LLMs</span>
-        <span class="skill-list">LangChain, LangGraph, CrewAI, RAG pipelines, LLM evaluation, multi-agent systems, prompt engineering, fine-tuning, Hugging Face</span>
-      </div>
-      <div class="skill-row">
-        <span class="skill-cat">Backend & APIs</span>
-        <span class="skill-list">Python, FastAPI, Django, Node.js, TypeScript, REST APIs</span>
-      </div>
-      <div class="skill-row">
-        <span class="skill-cat">Frontend</span>
-        <span class="skill-list">ReactJS, Next.js, Three.js, Streamlit</span>
-      </div>
-      <div class="skill-row">
-        <span class="skill-cat">Cloud & Infra</span>
-        <span class="skill-list">GCP, Azure, Docker, Kubernetes, Terraform, GitHub Actions, CI/CD</span>
-      </div>
-      <div class="skill-row">
-        <span class="skill-cat">Data & ML</span>
-        <span class="skill-list">PostgreSQL, MongoDB, Qdrant, Elasticsearch, BigQuery, ETL pipelines, Scrapy, PyTorch, XGBoost, Pandas, Power BI</span>
-      </div>
-      <div class="skill-row">
-        <span class="skill-cat">Languages</span>
-        <span class="skill-list">English C1 · German A2</span>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section section-sm">
+    <div class="contact-inner">
+      <h2>Let's build something that ships.</h2>
+      <p>Open to full-time roles in AI engineering, data science, or business analysis across Germany, the Netherlands, and Belgium.</p>
+      <a href="mailto:sakpaldarshana77@gmail.com" class="btn btn-primary">Start a conversation</a>
+      <div class="contact-links">
+        <a href="mailto:sakpaldarshana77@gmail.com" class="contact-link">sakpaldarshana77@gmail.com</a>
+        <a href="https://linkedin.com/in/darshana-sakpal" target="_blank" class="contact-link">LinkedIn</a>
+        <a href="https://github.com/darshina2" target="_blank" class="contact-link">GitHub</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Darshana Sakpal · Available immediately · Magdeburg, Germany</p>
-    <div class="footer-links">
-      <a href="mailto:sakpaldarshana77@gmail.com">Email</a>
-      <a href="https://linkedin.com/in/darshana-sakpal" target="_blank">LinkedIn</a>
-      <a href="https://github.com/darshina2" target="_blank">GitHub</a>
-    </div>
-  </footer>
+</main>
 
-</div>
+<footer>
+  <p>© 2026 Darshana Sakpal. Built with HTML · CSS · JS</p>
+  <div class="footer-links">
+    <a href="mailto:sakpaldarshana77@gmail.com">Email</a>
+    <a href="https://linkedin.com/in/darshana-sakpal" target="_blank">LinkedIn</a>
+    <a href="https://github.com/darshina2" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<script>
+// ── LOADER ──
+const bar = document.getElementById('bar');
+const pct = document.getElementById('pct');
+const loader = document.getElementById('loader');
+let p = 0;
+const iv = setInterval(() => {
+  p = Math.min(p + Math.random() * 18, 100);
+  bar.style.width = p + '%';
+  pct.textContent = Math.floor(p) + '%';
+  if (p >= 100) {
+    clearInterval(iv);
+    setTimeout(() => {
+      loader.style.opacity = '0';
+      setTimeout(() => loader.style.display = 'none', 500);
+    }, 200);
+  }
+}, 80);
+
+// ── ROLE DATA ──
+const roles = {
+  ai: {
+    tag: 'AI Engineer · Magdeburg, Germany',
+    animated: 'AI Engineer',
+    desc: 'Building production pipelines, agentic workflows, and automations that ship. M.Sc. Digital Engineering graduate with 5 years of business context behind every technical decision.',
+    aboutTitle: 'Turning frontier AI into systems that run in production.',
+    aboutDesc: 'I design and ship agentic LLM systems, RAG pipelines, and full-stack AI applications — with five years of business development experience keeping every technical decision grounded in real-world value.',
+    principles: [
+      ['Production-first','Systems built to run reliably — monitored, containerised, and reproducible from day one.'],
+      ['Evaluation-driven','Every AI pipeline ships with measurable quality criteria: ROUGE-L, BERTScore, hallucination rate.'],
+      ['Agentic by design','Multi-agent architectures with tool use, memory, and human-in-the-loop feedback built in from the start.']
+    ],
+    accent: '#6366F1',
+    acsBg: 'rgba(99,102,241,0.08)',
+    tabClass: 'active-ai'
+  },
+  ds: {
+    tag: 'Data Scientist · Magdeburg, Germany',
+    animated: 'Data Scientist',
+    desc: 'Turning messy data into decisions people actually trust. M.Sc. Digital Engineering graduate with hands-on experience in ML modelling, LLM evaluation, and production ETL pipelines.',
+    aboutTitle: 'Rigorous analysis. Actionable outcomes.',
+    aboutDesc: 'From XGBoost risk models to LLM evaluation frameworks, I combine quantitative rigour with domain understanding — having worked in research, industrial, and business contexts across Germany.',
+    principles: [
+      ['Model-first','Every prediction is validated, segmented, and tied to a measurable business outcome.'],
+      ['Pipeline-grade','Production ETL systems that handle 30+ sources, optimised for throughput and cost.'],
+      ['Honest evaluation','LLM and ML outputs are only as good as their evaluation — I measure what matters.']
+    ],
+    accent: '#0D9488',
+    acsBg: 'rgba(13,148,136,0.08)',
+    tabClass: 'active-ds'
+  },
+  ba: {
+    tag: 'Business Analyst · Magdeburg, Germany',
+    animated: 'Business Analyst',
+    desc: 'Bridging business strategy and AI-driven insight. Five years at Siemens, now M.Sc. Digital Engineering — I translate between what the business needs and what the data can do.',
+    aboutTitle: 'Strategy meets data. Insights that drive decisions.',
+    aboutDesc: 'Five years of business development at Siemens gave me the stakeholder skills. An M.Sc. in Digital Engineering gave me the technical depth. I bring both to every analysis and recommendation.',
+    principles: [
+      ['Stakeholder-driven','Requirements gathered from non-technical leaders; recommendations delivered in their language.'],
+      ['Data-backed','Every recommendation is grounded in real numbers, not assumptions or gut feel.'],
+      ['Cross-functional','Comfortable working across engineering, product, logistics, and leadership teams simultaneously.']
+    ],
+    accent: '#D97706',
+    acsBg: 'rgba(217,119,6,0.08)',
+    tabClass: 'active-ba'
+  }
+};
+
+// animated role typer
+let typer = null;
+function typeRole(text) {
+  const el = document.getElementById('animated-role');
+  if (typer) clearInterval(typer);
+  el.textContent = '';
+  let i = 0;
+  typer = setInterval(() => {
+    el.textContent += text[i++];
+    if (i >= text.length) clearInterval(typer);
+  }, 60);
+}
+
+function setAccentVars(r) {
+  const d = roles[r];
+  document.documentElement.style.setProperty('--active', d.accent);
+  // update hi tags
+  document.querySelectorAll('.skill-tag.hi').forEach(t => {
+    t.style.borderColor = d.accent;
+    t.style.color = d.accent;
+    t.style.background = d.acsBg;
+  });
+}
+
+function switchRole(role) {
+  const d = roles[role];
+  document.body.setAttribute('data-role', role);
+  setAccentVars(role);
+
+  // hero
+  document.getElementById('hero-tag').textContent = d.tag;
+  typeRole(d.animated);
+  document.getElementById('hero-desc').textContent = d.desc;
+
+  // about
+  document.getElementById('about-title').textContent = d.aboutTitle;
+  document.getElementById('about-desc').textContent = d.aboutDesc;
+
+  // principles
+  const pEls = document.querySelectorAll('.principle');
+  d.principles.forEach((p, i) => {
+    pEls[i].querySelector('h3').textContent = p[0];
+    pEls[i].querySelector('p').textContent = p[1];
+  });
+
+  // tabs
+  document.querySelectorAll('.role-tab').forEach(t => {
+    t.className = 'role-tab';
+    if (t.dataset.role === role) t.classList.add(d.tabClass);
+  });
+
+  // skill panels
+  document.querySelectorAll('.skill-panel').forEach(p => {
+    p.style.display = p.dataset.role === role ? 'grid' : 'none';
+  });
+
+  // filter projects by role tab (reset to All)
+  filterProjects('all');
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === 'all');
+  });
+}
+
+// project filter
+function filterProjects(filter) {
+  document.querySelectorAll('.project-card').forEach(card => {
+    const cats = card.dataset.cats;
+    card.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
+  });
+}
+
+document.querySelectorAll('.role-tab').forEach(tab => {
+  tab.addEventListener('click', () => switchRole(tab.dataset.role));
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterProjects(btn.dataset.filter);
+  });
+});
+
+// init
+setAccentVars('ai');
+</script>
 </body>
 </html>
